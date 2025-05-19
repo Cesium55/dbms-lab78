@@ -39,7 +39,7 @@ class EventsService
     }
 
     public function get_matches(int $event_id){
-        return DB::select("SELECT * FROM get_event_matches(?);", [$event_id]);
+        return DB::select("SELECT * FROM get_event_matches(?) ORDER BY id;", [$event_id]);
     }
 
     public function register_participant($data){

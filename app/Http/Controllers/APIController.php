@@ -33,19 +33,13 @@ class APIController extends Controller
 
     public function createSport(Request $request)
     {
-        $validator = Validator::make($request->all(), [
-            'name' => 'required|string|max:255|min:2|unique:sports,name'
-        ]);
-
-        if ($validator->fails()) {
-            return response()->json($validator->errors(), 422);
-        }
+        $name = $request->name ?? "";
 
         $sport = DB::selectOne("
             INSERT INTO sports (name)
-            VALUES (:name)
+            VALUES (?)
             RETURNING *
-        ", $validator->validated());
+        ", [$name]);
 
         return response()->json($sport);
     }
